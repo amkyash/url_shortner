@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Custom URL Shortener</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" type="text/css" media="screen">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" media="screen">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+
+<body class="pace-done lout_stats30">
+    <main id="content" role="main" class="wyniki wyniki_all">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 page_log_in mt-0">
+                    <h2 class="h1" style="text-align: center;">Link Analytics</h2>
+                </div>
+
+                <div class="url_options url_stats_o" id="1">
+                    <p class="data_link"> {{date}} </p>
+                    <p class="url_link">
+                         {{long_url}} 
+                    </p>
+                    <p id="link" class="link_element">
+                        <a href="/{{ short_url }}" class="short_url_l" target="_blank">
+                             {{short_url}} </a>
+                    </p>
+                    <div class="stats_total btn-cutt click_stats btn_norm">
+                        <div>Total clicks <strong class="allClicks"> {{clicks}} </strong></div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="col-6">
+                    <h2 style="text-align: center; font-size: 25px; font-weight: 500;">Operating Systems</h2>
+                    <canvas id="barChart"></canvas>
+                </div>
+                <!--- <div class="col-6">
+                    <h2 style="text-align: center; font-size: 25px; font-weight: 500;">Device clicks</h2>
+                    <canvas id="donutChart"></canvas> --->
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+    <script>
+        const ctx = document.getElementById('barChart').getContext('2d');
+        const os = {{ os }};
+        const number_of_clicks = {{ clicks }};
+
+        const barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: os,
+                datasets: [{
+                    labels:'Operating Systems'
+                    data: number_of_clicks,
+                    backgroundColor: [
+                        '#FF6384',
+                    ],
+                }]
+            }
+        });
+
+        
+    </script>
+
+</html>
